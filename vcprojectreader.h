@@ -24,6 +24,7 @@ public:
 protected:
     void readSources();
     void createFilters(QStringList filterNames);
+    void insertFilter(const QString &filterName, const QString &fileName = QString());
 
 private:
     QString               m_fileName;

@@ -62,47 +62,58 @@ void VcProjectReader::readSources()
     {
         QString row = m_reader->attributes().at(0).value().toString();
         QStringList list = row.split("\\");
-        //list.removeAll("..");
         createFilters(list);
-        qDebug() << list;
     }
+
     m_reader->readNext();
 }
 
 void VcProjectReader::createFilters(QStringList rawStrings)
 {
     QString filterName, fileName;
+
     foreach (QString name, rawStrings) {
         QRegExp rx("\\.(h|c(c)|c(pp)?)$");
         if(!name.contains(rx))
         {
-            filterName += name + "\\";
+            filterName += name;
+            insertFilter(filterName.remove("..\\"));
+            filterName += "\\";
         } else {
             fileName = filterName + name;
+            insertFilter(filterName.remove("..\\").remove(filterName.lastIndexOf("\\"), 1), fileName);
         }
-
     }
-    filterName = filterName.remove(filterName.size()-1, 1);
-    filterName = filterName.remove("..\\");
+}
+
+void VcProjectReader::insertFilter(const QString &filterName, const QString &fileName)
+{
+    if(filterName.isEmpty())
+        return;
+
     if(m_filterMap.contains(filterName))
     {
-        Filter filter = m_filterMap[filterName];
-        if(fileName.endsWith(".cpp") || fileName.endsWith(".cc") || fileName.endsWith(".c"))
+        if(!fileName.isEmpty())
         {
-            filter.appendSourceFile(fileName);
-        } else
-        {
-            filter.appendHeaderFile(fileName);
+            Filter filter = m_filterMap[filterName];
+            if(fileName.endsWith(".cpp") || fileName.endsWith(".cc") || fileName.endsWith(".c"))
+            {
+                filter.appendSourceFile(fileName);
+            } else
+            {
+                filter.appendHeaderFile(fileName);
+            }
+            m_filterMap[filterName] = filter;
         }
-
-        m_filterMap[filterName] = filter;
     } else {
+        QStringList sources, headers;
         if(fileName.endsWith(".cpp") || fileName.endsWith(".cc") || fileName.endsWith(".c"))
         {
-            m_filterMap.insert(filterName, Filter(filterName, QStringList() << fileName, QStringList()));
-        } else {
-            m_filterMap.insert(filterName, Filter(filterName, QStringList(), QStringList() << fileName));
-        }
+            sources << fileName;
 
+        } else if(!fileName.isEmpty()){
+            headers << fileName;
+        }
+        m_filterMap.insert(filterName, Filter(filterName, sources, headers));
     }
 }
