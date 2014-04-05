@@ -43,7 +43,7 @@ const QMap<QString, Filter> &VcProjectReader::read()
 {
     while (!m_reader->atEnd()) {
         QXmlStreamReader::TokenType type = m_reader->readNext();
-        if(type == QXmlStreamReader::TokenType::StartElement && m_reader->name() == "ItemGroup")
+        if(type == QXmlStreamReader::StartElement && m_reader->name() == "ItemGroup")
         {
             m_reader->readNextStartElement();
             if(m_reader->name() != "ClCompile" && m_reader->name() != "ClInclude" ) continue;
