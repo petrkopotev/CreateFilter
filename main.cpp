@@ -6,15 +6,25 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    QStringList argList = a.arguments();
 
-    VcProjectReader reader("./WebCore.vcxproj");
+    if(argList.count() != 2)
+    {
+        qDebug() << "Usage: CreateFilter YourFile.vcxproj";
+        exit(1);
+    }
+
+    QString projectFile = argList.at(1);
+    QString filterFile = projectFile + ".filters";
+
+    VcProjectReader reader(projectFile);
 
     if(!reader.open())
     {
-        qDebug() << "Error opening file";
-        exit(100);
+        qDebug() << "Error opening file" << projectFile;
+        exit(-1);
     }
-    VcFilterWriter writer("./WebCore.vcxproj.filters", reader.read().values());
+    VcFilterWriter writer(filterFile, reader.read().values());
     writer.open();
     writer.write();
     writer.close();
