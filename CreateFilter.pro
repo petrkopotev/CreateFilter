@@ -10,6 +10,8 @@ QT       += core
 QT       -= gui
 
 TARGET = CreateFilter
+DESTDIR = bin
+OBJECTS_DIR = obj
 CONFIG   += console
 CONFIG   -= app_bundle
 
