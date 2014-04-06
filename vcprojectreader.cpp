@@ -1,6 +1,7 @@
 #include "vcprojectreader.h"
 #include <QXmlStreamReader>
 #include <QFile>
+#include <QDir>
 #include <QDebug>
 
 VcProjectReader::VcProjectReader(const QString &fileName) :
@@ -61,14 +62,14 @@ void VcProjectReader::readSources()
     if(m_reader->attributes().size() != 0)
     {
         QString row = m_reader->attributes().at(0).value().toString();
-        QStringList list = row.split("\\");
+        QStringList list = row.split(QDir::separator());
         createFilters(list);
     }
 
     m_reader->readNext();
 }
 
-void VcProjectReader::createFilters(QStringList rawStrings)
+void VcProjectReader::createFilters(const QStringList &rawStrings)
 {
     QString filterName, fileName;
 
