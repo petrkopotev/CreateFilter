@@ -60,9 +60,9 @@ void FilterWriter::WriteFilter(tinyxml2::XMLNode* parentNode, const Filter &filt
 
 void FilterWriter::WriteFilterSourceFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName)
 {
-    //<ClInclude Include="..\wtf\OwnPtr.h">
+    //<CLCompile Include="..\wtf\OwnPtr.h">
     //      <Filter>wtf</Filter>
-    //</ClInclude>
+    //</CLCompile>
     WriteFilterFile("CLCompile", parentNode, filter, fileName);
 }
 
