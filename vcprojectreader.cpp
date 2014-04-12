@@ -7,29 +7,17 @@
 VcProjectReader::VcProjectReader(const QString &fileName) :
     m_fileName(fileName)
 {
-    m_file = new QFile(m_fileName);
-    m_reader = new QXmlStreamReader();
+    m_document = new tinyxml2::XMLDocument;
 }
 
 VcProjectReader::~VcProjectReader()
 {
-    if(m_file->isOpen())
-    {
-        m_file->close();
-    }
-
-    delete m_file;
-    delete m_reader;
+    delete m_document;
 }
 
 bool VcProjectReader::open()
 {
-    if(!m_file->open(QIODevice::ReadOnly))
-    {
-        return false;
-    }
-
-    m_reader->setDevice(m_file);
+    m_document->LoadFile(m_fileName.toStdString().data());
     m_filterMap.clear();
 
     return true;
@@ -37,12 +25,54 @@ bool VcProjectReader::open()
 
 void VcProjectReader::close()
 {
-    m_file->close();
+    // DO we need to reinitialize it?
+    delete m_document;
+    m_document = new tinyxml2::XMLDocument;
+}
+
+void VcProjectReader::LookupForSources(tinyxml2::XMLNode* node)
+{
+    if(tinyxml2::XMLElement *element = node->ToElement())
+    {
+        if(strcmp(element->Name(), "ItemGroup") == 0)
+        {
+            qDebug() << "ItemGroup was found";
+            //look for ClInclude, ClCompile now
+            for(tinyxml2::XMLNode* node = element->FirstChild(); node; node = node->NextSibling())
+            {
+                if(tinyxml2::XMLElement* el = node->ToElement())
+                {
+                    //Lookup for ClInclude, ClSource and extract
+                    if(strcmp(el->Name(), "ClInclude") == 0 || strcmp(el->Name(), "ClCompile") == 0)
+                    {
+                        qDebug() << el->Name() << el->FirstAttribute()->Name() << el->FirstAttribute()->Value();
+                        readSources(el->FirstAttribute()->Value());
+                    }
+                }
+            }
+        }
+    }
+}
+
+void VcProjectReader::readChildren(tinyxml2::XMLNode* node)
+{
+    if(node->GetDocument() != node)
+    {
+        LookupForSources(node);
+    }
+    
+    for(tinyxml2::XMLNode* child = node->FirstChild(); child; child = child->NextSibling())
+    {
+        qDebug() << child->Value();
+        readChildren(child);
+    }
 }
 
 const QMap<QString, Filter> &VcProjectReader::read()
 {
-    while (!m_reader->atEnd()) {
+    readChildren(m_document);
+    
+    /*while (!m_reader->atEnd()) {
         QXmlStreamReader::TokenType type = m_reader->readNext();
         if(type == QXmlStreamReader::StartElement && m_reader->name() == "ItemGroup")
         {
@@ -52,21 +82,28 @@ const QMap<QString, Filter> &VcProjectReader::read()
                 readSources();
             }
         }
-    }
+    }*/
 
     return m_filterMap;
 }
 
+void VcProjectReader::readSources(const char *str)
+{
+    QString row = QString::fromLocal8Bit(str);
+    QStringList list = row.split(QDir::separator());
+    createFilters(list);
+}
+
 void VcProjectReader::readSources()
 {
-    if(m_reader->attributes().size() != 0)
+    /*if(m_reader->attributes().size() != 0)
     {
         QString row = m_reader->attributes().at(0).value().toString();
         QStringList list = row.split(QDir::separator());
         createFilters(list);
     }
 
-    m_reader->readNext();
+    m_reader->readNext();*/
 }
 
 void VcProjectReader::createFilters(const QStringList &rawStrings)

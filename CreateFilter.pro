@@ -17,15 +17,16 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-
 SOURCES += main.cpp \
     filter.cpp \
     vcprojectreader.cpp \
     filterwriter.cpp \
-    vcfilterwriter.cpp
+    vcfilterwriter.cpp \
+    tinyxml/tinyxml2.cpp
 
 HEADERS += \
     filter.h \
     vcprojectreader.h \
     filterwriter.h \
-    vcfilterwriter.h
+    vcfilterwriter.h \
+    tinyxml/tinyxml2.cpp
