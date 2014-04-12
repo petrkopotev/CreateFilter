@@ -21,8 +21,6 @@ public:
 
 private:
     QString               m_fileName;
-    QFile                *m_file;
-    QXmlStreamWriter     *m_writer;
     FilterWriter         *m_filterWriter;
     QList<Filter>         m_filterList;
 };

@@ -1,32 +1,31 @@
 #ifndef FILTERWRITER_H
 #define FILTERWRITER_H
 
-#include <QXmlStreamWriter>
-#include <QDir>
 #include <QList>
 #include "Filter.h"
+#include "tinyxml/tinyxml2.h"
 
 class FilterWriter
 {
 public:
-    FilterWriter(QXmlStreamWriter *writer);
+    FilterWriter(const QString &fileName);
     ~FilterWriter();
 
     void StartWrite();
     void WriteHeaders();
     void WriteBody(const QList<Filter> &filterList);
-    void WriteFilter(QXmlStreamWriter &writer, const Filter &filter);
+    void WriteFilter(tinyxml2::XMLNode *parentNode, const Filter &filter);
     void EndWrite();
 
 private:
-    void WriteFilterNames(const QList<Filter> &filterList);
-    void ParseFilterSourceFiles(const QList<Filter> &filterList);
-    void ParseFilterHeadersFiles(const QList<Filter> &filterList);
-    void WriteFilterSourceFile(QXmlStreamWriter &writer, const Filter &filter, const QString &fileName);
-    void WriteFilterHeaderFile(QXmlStreamWriter &writer, const Filter &filter, const QString &fileName);
-    QString ConcatenateDirs(const QString &dir, const QString& localDirName);
+    void WriteFilterNames(tinyxml2::XMLNode *parentNode, const QList<Filter> &filterList);
+    void ParseFilterSourceFiles(tinyxml2::XMLNode* parentNode, const QList<Filter> &filterList);
+    void ParseFilterHeadersFiles(tinyxml2::XMLNode* parentNode, const QList<Filter> &filterList);
+    void WriteFilterSourceFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName);
+    void WriteFilterHeaderFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName);
 
-    QXmlStreamWriter *m_writer;
+    QString m_fileName;
+    tinyxml2::XMLDocument *m_document;
 
 };
 
