@@ -14,7 +14,7 @@ FilterWriter::~FilterWriter()
 
 void FilterWriter::StartWrite()
 {
-    m_document->InsertEndChild(m_document->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8"));
+    m_document->InsertEndChild(m_document->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\""));
 }
 
 void FilterWriter::WriteHeaders()
@@ -63,18 +63,7 @@ void FilterWriter::WriteFilterSourceFile(tinyxml2::XMLNode* parentNode, const Fi
     //<ClInclude Include="..\wtf\OwnPtr.h">
     //      <Filter>wtf</Filter>
     //</ClInclude>
-    tinyxml2::XMLElement *includeElement = m_document->NewElement("CLCompile");
-    includeElement->SetAttribute("Include", fileName.toStdString().data());
-
-    tinyxml2::XMLElement *filterElement = m_document->NewElement("Filter");
-    filterElement->SetText(filter.getFilterName().toStdString().data());
-
-    includeElement->InsertEndChild(filterElement);
-    parentNode->InsertEndChild(includeElement);
-    /*writer.writeStartElement("CLCompile");
-    writer.writeAttribute("Include", fileName);
-    writer.writeTextElement("Filter", filter.getFilterName());
-    writer.writeEndElement();*/
+    WriteFilterFile("CLCompile", parentNode, filter, fileName);
 }
 
 void FilterWriter::WriteFilterHeaderFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName)
@@ -82,7 +71,12 @@ void FilterWriter::WriteFilterHeaderFile(tinyxml2::XMLNode* parentNode, const Fi
     //<ClInclude Include="..\wtf\OwnPtr.h">
     //      <Filter>wtf</Filter>
     //</ClInclude>
-    tinyxml2::XMLElement *includeElement = m_document->NewElement("CLInclude");
+    WriteFilterFile("CLInclude", parentNode, filter, fileName);
+}
+
+void FilterWriter::WriteFilterFile(const char* tag, tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName)
+{
+    tinyxml2::XMLElement *includeElement = m_document->NewElement(tag);
     includeElement->SetAttribute("Include", fileName.toStdString().data());
 
     tinyxml2::XMLElement *filterElement = m_document->NewElement("Filter");

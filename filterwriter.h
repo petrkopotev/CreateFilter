@@ -23,6 +23,7 @@ private:
     void ParseFilterHeadersFiles(tinyxml2::XMLNode* parentNode, const QList<Filter> &filterList);
     void WriteFilterSourceFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName);
     void WriteFilterHeaderFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName);
+    void WriteFilterFile(const char* tag, tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName);
 
     QString m_fileName;
     tinyxml2::XMLDocument *m_document;
