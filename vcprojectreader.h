@@ -2,13 +2,10 @@
 #define VCPROJECTREADER_H
 
 #include<QString>
-#include <QPointer>
 #include <QMap>
 #include "Filter.h"
 #include "tinyxml/tinyxml2.h"
 
-class QXmlStreamReader;
-class QFile;
 
 class VcProjectReader
 {
@@ -20,10 +17,7 @@ public:
     void close();
     const QMap<QString, Filter>& read();
 
-
-
 protected:
-    void readSources();
     void readSources(const char* str);
     void readChildren(tinyxml2::XMLNode* node);
     void LookupForSources(tinyxml2::XMLNode* node);

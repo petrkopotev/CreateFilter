@@ -1,8 +1,7 @@
 #include "vcprojectreader.h"
-#include <QXmlStreamReader>
-#include <QFile>
 #include <QDir>
 #include <QDebug>
+
 
 VcProjectReader::VcProjectReader(const QString &fileName) :
     m_fileName(fileName)
@@ -30,13 +29,14 @@ void VcProjectReader::close()
     m_document = new tinyxml2::XMLDocument;
 }
 
+
+///TODO extract this to something more neat
 void VcProjectReader::LookupForSources(tinyxml2::XMLNode* node)
 {
     if(tinyxml2::XMLElement *element = node->ToElement())
     {
         if(strcmp(element->Name(), "ItemGroup") == 0)
         {
-            qDebug() << "ItemGroup was found";
             //look for ClInclude, ClCompile now
             for(tinyxml2::XMLNode* node = element->FirstChild(); node; node = node->NextSibling())
             {
@@ -63,7 +63,6 @@ void VcProjectReader::readChildren(tinyxml2::XMLNode* node)
     
     for(tinyxml2::XMLNode* child = node->FirstChild(); child; child = child->NextSibling())
     {
-        qDebug() << child->Value();
         readChildren(child);
     }
 }
@@ -72,18 +71,6 @@ const QMap<QString, Filter> &VcProjectReader::read()
 {
     readChildren(m_document);
     
-    /*while (!m_reader->atEnd()) {
-        QXmlStreamReader::TokenType type = m_reader->readNext();
-        if(type == QXmlStreamReader::StartElement && m_reader->name() == "ItemGroup")
-        {
-            m_reader->readNextStartElement();
-            if(m_reader->name() != "ClCompile" && m_reader->name() != "ClInclude" ) continue;
-            while (!m_reader->isEndElement() || m_reader->name() != "ItemGroup") {
-                readSources();
-            }
-        }
-    }*/
-
     return m_filterMap;
 }
 
@@ -92,18 +79,6 @@ void VcProjectReader::readSources(const char *str)
     QString row = QString::fromLocal8Bit(str);
     QStringList list = row.split(QDir::separator());
     createFilters(list);
-}
-
-void VcProjectReader::readSources()
-{
-    /*if(m_reader->attributes().size() != 0)
-    {
-        QString row = m_reader->attributes().at(0).value().toString();
-        QStringList list = row.split(QDir::separator());
-        createFilters(list);
-    }
-
-    m_reader->readNext();*/
 }
 
 void VcProjectReader::createFilters(const QStringList &rawStrings)
