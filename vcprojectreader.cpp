@@ -1,9 +1,9 @@
 #include "vcprojectreader.h"
 #include <QDir>
-#include <QDebug>
+#include <regex>
 
 
-VcProjectReader::VcProjectReader(const QString &fileName) :
+VcProjectReader::VcProjectReader(const std::string &fileName) :
     m_fileName(fileName)
 {
     m_document = new tinyxml2::XMLDocument;
@@ -16,7 +16,12 @@ VcProjectReader::~VcProjectReader()
 
 bool VcProjectReader::open()
 {
-    m_document->LoadFile(m_fileName.toStdString().data());
+    tinyxml2::XMLError error = m_document->LoadFile(m_fileName.data());
+    if(error == tinyxml2::XML_ERROR_FILE_NOT_FOUND)
+    {
+        return false;
+    }
+
     m_filterMap.clear();
 
     return true;
@@ -45,7 +50,6 @@ void VcProjectReader::LookupForSources(tinyxml2::XMLNode* node)
                     //Lookup for ClInclude, ClSource and extract
                     if(strcmp(el->Name(), "ClInclude") == 0 || strcmp(el->Name(), "ClCompile") == 0)
                     {
-                        qDebug() << el->Name() << el->FirstAttribute()->Name() << el->FirstAttribute()->Value();
                         readSources(el->FirstAttribute()->Value());
                     }
                 }
@@ -67,49 +71,96 @@ void VcProjectReader::readChildren(tinyxml2::XMLNode* node)
     }
 }
 
-const QMap<QString, Filter> &VcProjectReader::read()
+const QMap<std::string, Filter> &VcProjectReader::read()
 {
     readChildren(m_document);
     
     return m_filterMap;
 }
 
+std::list<std::string> split(std::string &toSplit, const std::string &separator)
+{
+    size_t pos = 0;
+    std::string token;
+    std::list<std::string> result;
+    while((pos = toSplit.find(separator)) != std::string::npos)
+    {
+        token = toSplit.substr(0, pos);
+        result.push_back(token);
+        toSplit.erase(0, pos + separator.length());
+    }
+
+    return result;
+}
+
 void VcProjectReader::readSources(const char *str)
 {
-    QString row = QString::fromLocal8Bit(str);
-    QStringList list = row.split(QDir::separator());
+    std::string row = str;
+    char separator = QDir::separator().toLatin1();
+    std::list<std::string> list = split(row, std::string(&separator));
+
+    //QString row = QString::fromLocal8Bit(str);
+    //QStringList list = row.split(QDir::separator());
     createFilters(list);
 }
 
-void VcProjectReader::createFilters(const QStringList &rawStrings)
+void VcProjectReader::createFilters(const std::list<std::string> &rawStrings)
 {
-    QString filterName, fileName;
+    std::string filterName, fileName;
 
-    foreach (QString name, rawStrings) {
-        QRegExp rx("\\.(h|c(c)|c(pp)?)$");
-        if(!name.contains(rx))
+    for(auto it = rawStrings.cbegin();
+        it != rawStrings.cend(); it++)
+    {
+        if(!std::regex_match(*it, std::regex("\\.(h|c(c)|c(pp)?)$")))
         {
-            filterName += name;
-            insertFilter(filterName.remove("..\\"));
+            filterName += *it;
+            fileName.erase(fileName.find("..\\"));
+            insertFilter(fileName);
             filterName += "\\";
         } else {
-            fileName = filterName + name;
-            insertFilter(filterName.remove("..\\").remove(filterName.lastIndexOf("\\"), 1), fileName);
+            fileName = filterName + *it;
+            filterName.erase(filterName.find("..\\"));
+            filterName.erase(filterName.find_last_of("\\"));
+            insertFilter(filterName, fileName);
         }
+    }
+
+
+//    foreach (QString name, rawStrings) {
+
+//        QRegExp rx("\\.(h|c(c)|c(pp)?)$");
+//        if(!name.contains(rx))
+//        {
+//            filterName += name;
+//            insertFilter(filterName.remove("..\\"));
+//            filterName += "\\";
+//        } else {
+//            fileName = filterName + name;
+//            insertFilter(filterName.remove("..\\").remove(filterName.lastIndexOf("\\"), 1), fileName);
+//        }
+//    }
+}
+
+bool endsWith(std::string const &fullString, std::string const &ending)
+{
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
     }
 }
 
-void VcProjectReader::insertFilter(const QString &filterName, const QString &fileName)
+void VcProjectReader::insertFilter(const std::string &filterName, const std::string &fileName)
 {
-    if(filterName.isEmpty())
+    if(filterName.empty())
         return;
 
     if(m_filterMap.contains(filterName))
     {
-        if(!fileName.isEmpty())
+        if(!fileName.empty())
         {
             Filter filter = m_filterMap[filterName];
-            if(fileName.endsWith(".cpp") || fileName.endsWith(".cc") || fileName.endsWith(".c"))
+            if(endsWith(fileName, ".cpp") || endsWith(fileName, ".cc") || endsWith(fileName, ".c"))
             {
                 filter.appendSourceFile(fileName);
             } else
@@ -120,7 +171,7 @@ void VcProjectReader::insertFilter(const QString &filterName, const QString &fil
         }
     } else {
         QStringList sources, headers;
-        if(fileName.endsWith(".cpp") || fileName.endsWith(".cc") || fileName.endsWith(".c"))
+        if(endsWith(fileName, ".cpp") || endsWith(fileName, ".cc") || endsWith(fileName, ".c"))
         {
             sources << fileName;
 

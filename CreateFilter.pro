@@ -13,7 +13,10 @@ TARGET = CreateFilter
 DESTDIR = bin
 OBJECTS_DIR = obj
 CONFIG   += console
+CONFIG   +=c++11
 CONFIG   -= app_bundle
+
+QMAKE_MACOSX_DEPLOYMENT_TARGET=10.9
 
 TEMPLATE = app
 
@@ -29,4 +32,5 @@ HEADERS += \
     vcprojectreader.h \
     filterwriter.h \
     vcfilterwriter.h \
-    tinyxml/tinyxml2.cpp
+    tinyxml/tinyxml2.cpp \
+    StringUtil.h

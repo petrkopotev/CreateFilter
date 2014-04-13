@@ -1,36 +1,28 @@
-#include <QCoreApplication>
-#include <QDebug>
 #include "vcprojectreader.h"
 #include "vcfilterwriter.h"
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-    QStringList argList = a.arguments();
-
-    if(argList.count() != 2)
+    if(argc != 2)
     {
-        qDebug() << "Usage: CreateFilter YourFile.vcxproj";
-        exit(1);
+        printf("%s", "Usage: CreateFilter YourFile.vcxproj\n");
+        return 1;
     }
 
-    QString projectFile = argList.at(1);
-    QString filterFile = projectFile + ".filters";
-
-    VcProjectReader reader(projectFile);
+    std::string projectFile = argv[1];
+    std::string filterFile = projectFile + ".filters";
+    VcProjectReader reader(projectFile.data());
 
     if(!reader.open())
     {
-        qDebug() << "Error opening file" << projectFile;
+        fprintf(stderr, "%s %s\n", "Error opening file", projectFile.data());
         exit(-1);
     }
-    VcFilterWriter writer(filterFile, reader.read().values());
+    VcFilterWriter writer(filterFile.data(), reader.read().values());
     writer.open();
     writer.write();
     writer.close();
     reader.close();
 
-    qDebug() << "Done";
-
-    return a.exec();
+    return 0;
 }
