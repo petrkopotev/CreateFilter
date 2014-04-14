@@ -1,4 +1,5 @@
 #include "vcprojectreader.h"
+#include "StringUtil.h"
 #include <QDir>
 #include <regex>
 
@@ -36,7 +37,7 @@ void VcProjectReader::close()
 
 
 ///TODO extract this to something more neat
-void VcProjectReader::LookupForSources(tinyxml2::XMLNode* node)
+void VcProjectReader::lookupForSources(tinyxml2::XMLNode* node)
 {
     if(tinyxml2::XMLElement *element = node->ToElement())
     {
@@ -62,7 +63,7 @@ void VcProjectReader::readChildren(tinyxml2::XMLNode* node)
 {
     if(node->GetDocument() != node)
     {
-        LookupForSources(node);
+        lookupForSources(node);
     }
     
     for(tinyxml2::XMLNode* child = node->FirstChild(); child; child = child->NextSibling())
@@ -71,7 +72,7 @@ void VcProjectReader::readChildren(tinyxml2::XMLNode* node)
     }
 }
 
-const QMap<std::string, Filter> &VcProjectReader::read()
+const std::map<std::string, Filter> &VcProjectReader::read()
 {
     readChildren(m_document);
     
@@ -141,26 +142,21 @@ void VcProjectReader::createFilters(const std::list<std::string> &rawStrings)
 //    }
 }
 
-bool endsWith(std::string const &fullString, std::string const &ending)
-{
-    if (fullString.length() >= ending.length()) {
-        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
-    } else {
-        return false;
-    }
-}
-
 void VcProjectReader::insertFilter(const std::string &filterName, const std::string &fileName)
 {
     if(filterName.empty())
         return;
 
-    if(m_filterMap.contains(filterName))
+
+
+    if(m_filterMap.find(filterName) != m_filterMap.cend())
     {
         if(!fileName.empty())
         {
             Filter filter = m_filterMap[filterName];
-            if(endsWith(fileName, ".cpp") || endsWith(fileName, ".cc") || endsWith(fileName, ".c"))
+            if(StringUtil::endsWith(fileName, ".cpp") ||
+                    StringUtil::endsWith(fileName, ".cc") ||
+                    StringUtil::endsWith(fileName, ".c"))
             {
                 filter.appendSourceFile(fileName);
             } else
@@ -170,14 +166,16 @@ void VcProjectReader::insertFilter(const std::string &filterName, const std::str
             m_filterMap[filterName] = filter;
         }
     } else {
-        QStringList sources, headers;
-        if(endsWith(fileName, ".cpp") || endsWith(fileName, ".cc") || endsWith(fileName, ".c"))
+        std::list<std::string> sources, headers;
+        if(StringUtil::endsWith(fileName, ".cpp") ||
+                StringUtil::endsWith(fileName, ".cc") ||
+                StringUtil::endsWith(fileName, ".c"))
         {
-            sources << fileName;
+            sources.push_back(fileName);
 
-        } else if(!fileName.isEmpty()){
-            headers << fileName;
+        } else if(!fileName.empty()){
+            headers.push_back(fileName);
         }
-        m_filterMap.insert(filterName, Filter(filterName, sources, headers));
+        m_filterMap.insert(std::pair<std::string, Filter>(filterName, Filter(filterName, sources, headers)));
     }
 }

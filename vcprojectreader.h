@@ -14,12 +14,12 @@ public:
 
     bool open();
     void close();
-    const QMap<std::string, Filter>& read();
+    const std::map<std::string, Filter>& read();
 
 protected:
     void readSources(const char* str);
     void readChildren(tinyxml2::XMLNode* node);
-    void LookupForSources(tinyxml2::XMLNode* node);
+    void lookupForSources(tinyxml2::XMLNode* node);
 
     void createFilters(const std::list<std::string> &filterNames);
     void insertFilter(const std::string &filterName, const std::string &fileName = std::string());
@@ -27,8 +27,7 @@ protected:
 private:
     std::string            m_fileName;
     tinyxml2::XMLDocument *m_document;
-    QMap<std::string, Filter>  m_filterMap;
-
+    std::map<std::string, Filter>  m_filterMap;
 };
 
 #endif // VCPROJECTREADER_H

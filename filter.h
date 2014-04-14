@@ -1,9 +1,8 @@
 #ifndef FILTER_H
 #define FILTER_H
 
-#include <QString>
-#include <QStringList>
 #include <QUuid>
+#include <list>
 
 class Filter
 {
@@ -17,7 +16,7 @@ public:
     std::string getFilterName() const { return m_name; }
     void setFilterName(const std::string &name);
 
-    QString getUuid() const { return m_uuid.toString(); }
+    std::string getUuid() const { return m_uuid.toString().toStdString(); }
 
     StringList getSources() const { return m_sources; }
     void appendSourceFile(const std::string &fileName);

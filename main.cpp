@@ -18,7 +18,16 @@ int main(int argc, char *argv[])
         fprintf(stderr, "%s %s\n", "Error opening file", projectFile.data());
         exit(-1);
     }
-    VcFilterWriter writer(filterFile.data(), reader.read().values());
+
+    std::map<std::string, Filter> result = reader.read();
+    std::list<Filter> filterList;
+    for(std::map<std::string, Filter>::const_iterator it = result.cbegin();
+        it != result.cend(); ++it)
+    {
+        filterList.push_back(it->second);
+    }
+
+    VcFilterWriter writer(filterFile, filterList);
     writer.open();
     writer.write();
     writer.close();

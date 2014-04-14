@@ -1,7 +1,7 @@
 #include "filterwriter.h"
 #include "filter.h"
 
-FilterWriter::FilterWriter( const QString &fileName) :
+FilterWriter::FilterWriter(const std::string &fileName) :
   m_fileName(fileName)
 {
     m_document = new tinyxml2::XMLDocument;
@@ -25,7 +25,7 @@ void FilterWriter::WriteHeaders()
     m_document->InsertEndChild(startElement);
 }
 
-void FilterWriter::WriteBody(const QList<Filter> &filterList)
+void FilterWriter::WriteBody(const std::list<Filter> &filterList)
 {
     tinyxml2::XMLElement* element = m_document->NewElement("ItemGroup");
     m_document->LastChild()->InsertEndChild(element);
@@ -42,23 +42,23 @@ void FilterWriter::WriteBody(const QList<Filter> &filterList)
 
 void FilterWriter::EndWrite()
 {
-    m_document->SaveFile(m_fileName.toStdString().data());
+    m_document->SaveFile(m_fileName.data());
 }
 
 void FilterWriter::WriteFilter(tinyxml2::XMLNode* parentNode, const Filter &filter)
 {
     tinyxml2::XMLElement* filterElement = m_document->NewElement("Filter");
-    filterElement->SetAttribute("Include", filter.getFilterName().toStdString().data());
+    filterElement->SetAttribute("Include", filter.getFilterName().data());
 
     tinyxml2::XMLElement* uuidElement = m_document->NewElement("UniqueIdentifier");
-    uuidElement->SetText(filter.getUuid().toStdString().data());
+    uuidElement->SetText(filter.getUuid().data());
 
     filterElement->InsertFirstChild(uuidElement);
     parentNode->InsertEndChild(filterElement);
 
 }
 
-void FilterWriter::WriteFilterSourceFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName)
+void FilterWriter::WriteFilterSourceFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName)
 {
     //<CLCompile Include="..\wtf\OwnPtr.h">
     //      <Filter>wtf</Filter>
@@ -66,7 +66,7 @@ void FilterWriter::WriteFilterSourceFile(tinyxml2::XMLNode* parentNode, const Fi
     WriteFilterFile("CLCompile", parentNode, filter, fileName);
 }
 
-void FilterWriter::WriteFilterHeaderFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName)
+void FilterWriter::WriteFilterHeaderFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName)
 {
     //<ClInclude Include="..\wtf\OwnPtr.h">
     //      <Filter>wtf</Filter>
@@ -74,43 +74,51 @@ void FilterWriter::WriteFilterHeaderFile(tinyxml2::XMLNode* parentNode, const Fi
     WriteFilterFile("CLInclude", parentNode, filter, fileName);
 }
 
-void FilterWriter::WriteFilterFile(const char* tag, tinyxml2::XMLNode* parentNode, const Filter &filter, const QString &fileName)
+void FilterWriter::WriteFilterFile(const char* tag, tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName)
 {
     tinyxml2::XMLElement *includeElement = m_document->NewElement(tag);
-    includeElement->SetAttribute("Include", fileName.toStdString().data());
+    includeElement->SetAttribute("Include", fileName.data());
 
     tinyxml2::XMLElement *filterElement = m_document->NewElement("Filter");
-    filterElement->SetText(filter.getFilterName().toStdString().data());
+    filterElement->SetText(filter.getFilterName().data());
 
     includeElement->InsertEndChild(filterElement);
     parentNode->InsertEndChild(includeElement);
 }
 
-void FilterWriter::WriteFilterNames(tinyxml2::XMLNode* node, const QList<Filter> &filterList)
+void FilterWriter::WriteFilterNames(tinyxml2::XMLNode* node, const std::list<Filter> &filterList)
 {
     foreach (Filter filter, filterList) {
         WriteFilter(node, filter);
     }
 }
 
-void FilterWriter::ParseFilterSourceFiles(tinyxml2::XMLNode *parentNode, const QList<Filter> &filterList)
+void FilterWriter::ParseFilterSourceFiles(tinyxml2::XMLNode *parentNode, const std::list<Filter> &filterList)
 {
-    foreach(Filter filter, filterList)
+    for(std::list<Filter>::const_iterator filterIterator = filterList.cbegin();
+        filterIterator != filterList.cend();
+        ++filterIterator)
     {
-        foreach(QString fileName, filter.getSources())
+        for(std::list<std::string>::const_iterator it = filterIterator->getSources().cbegin();
+            it != filterIterator->getSources().cend();
+            ++it)
         {
-            WriteFilterSourceFile(parentNode, filter, fileName);
+            WriteFilterSourceFile(parentNode, *filterIterator, *it);
         }
     }
 }
 
-void FilterWriter::ParseFilterHeadersFiles(tinyxml2::XMLNode* parentNode, const QList<Filter> &filterList)
+void FilterWriter::ParseFilterHeadersFiles(tinyxml2::XMLNode* parentNode, const std::list<Filter> &filterList)
 {
-    foreach(Filter filter, filterList)
+    for(std::list<Filter>::const_iterator filterIterator = filterList.cbegin();
+        filterIterator != filterList.cend();
+        ++filterIterator)
     {
-        foreach(QString fileName, filter.getHeaders())
+        for(std::list<std::string>::const_iterator it = filterIterator->getHeaders().cbegin();
+            it != filterIterator->getHeaders().cend();
+            ++it)
         {
-            WriteFilterHeaderFile(parentNode, filter, fileName);
+            WriteFilterHeaderFile(parentNode, *filterIterator, *it);
         }
     }
 }

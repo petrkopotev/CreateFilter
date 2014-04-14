@@ -12,7 +12,7 @@ class FilterWriter;
 class VcFilterWriter
 {
 public:
-    VcFilterWriter(const QString& fileName, const QList<Filter> &filterList);
+    VcFilterWriter(const std::string& fileName, const std::list<Filter> &filterList);
     ~VcFilterWriter();
 
     bool open();
@@ -20,9 +20,9 @@ public:
     void write();
 
 private:
-    QString               m_fileName;
-    FilterWriter         *m_filterWriter;
-    QList<Filter>         m_filterList;
+    std::string        m_fileName;
+    FilterWriter      *m_filterWriter;
+    std::list<Filter>  m_filterList;
 };
 
 #endif // VCFILTERWRITER_H

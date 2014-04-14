@@ -3,7 +3,7 @@
 #include <QXmlStreamWriter>
 #include "filterwriter.h"
 
-VcFilterWriter::VcFilterWriter(const QString &fileName, const QList<Filter> &filterList) :
+VcFilterWriter::VcFilterWriter(const std::string &fileName, const std::list<Filter> &filterList) :
     m_fileName(fileName)
   , m_filterList(filterList)
 {
