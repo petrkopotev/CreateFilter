@@ -18,11 +18,13 @@ public:
 
     std::string getUuid() const { return m_uuid.toString().toStdString(); }
 
-    StringList getSources() const { return m_sources; }
+    const StringList &getSources() const { return m_sources; }
     void appendSourceFile(const std::string &fileName);
 
-    StringList getHeaders() const { return m_headers; }
+    const StringList &getHeaders() const { return m_headers; }
     void appendHeaderFile(const std::string &fileName);
+
+    void show() const;
 
 private:
 

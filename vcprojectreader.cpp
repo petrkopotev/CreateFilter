@@ -91,6 +91,7 @@ std::list<std::string> split(std::string &toSplit, const std::string &separator)
         toSplit.erase(0, pos + separator.length());
     }
 
+    result.push_back(toSplit);
     return result;
 }
 
@@ -98,7 +99,7 @@ void VcProjectReader::readSources(const char *str)
 {
     std::string row = str;
     char separator = QDir::separator().toLatin1();
-    std::list<std::string> list = split(row, std::string(&separator));
+    std::list<std::string> list = split(row, std::string(1, separator));
 
     //QString row = QString::fromLocal8Bit(str);
     //QStringList list = row.split(QDir::separator());
@@ -109,37 +110,22 @@ void VcProjectReader::createFilters(const std::list<std::string> &rawStrings)
 {
     std::string filterName, fileName;
 
-    for(auto it = rawStrings.cbegin();
+    for(std::list<std::string>::const_iterator it = rawStrings.cbegin();
         it != rawStrings.cend(); it++)
     {
-        if(!std::regex_match(*it, std::regex("\\.(h|c(c)|c(pp)?)$")))
+        if(!std::regex_search(*it, std::regex("\\.(h|c(c)|c(pp)?)$")))
         {
-            filterName += *it;
-            fileName.erase(fileName.find("..\\"));
-            insertFilter(fileName);
-            filterName += "\\";
+            filterName.append(*it);
+            //filterName.erase(filterName.find("..\\") - 1);
+            insertFilter(filterName);
+            filterName.append("\\");
         } else {
-            fileName = filterName + *it;
-            filterName.erase(filterName.find("..\\"));
-            filterName.erase(filterName.find_last_of("\\"));
-            insertFilter(filterName, fileName);
+            fileName.append(filterName).append(*it);
+            //filterName.erase(filterName.find("..\\"));
+            //filterName.erase(filterName.find_last_of("\\"));
+            insertFilter(filterName.erase(filterName.find_last_of("\\")), fileName);
         }
     }
-
-
-//    foreach (QString name, rawStrings) {
-
-//        QRegExp rx("\\.(h|c(c)|c(pp)?)$");
-//        if(!name.contains(rx))
-//        {
-//            filterName += name;
-//            insertFilter(filterName.remove("..\\"));
-//            filterName += "\\";
-//        } else {
-//            fileName = filterName + name;
-//            insertFilter(filterName.remove("..\\").remove(filterName.lastIndexOf("\\"), 1), fileName);
-//        }
-//    }
 }
 
 void VcProjectReader::insertFilter(const std::string &filterName, const std::string &fileName)
