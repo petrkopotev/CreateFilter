@@ -1,14 +1,17 @@
 #include "filter.h"
+#include "uuid.h"
 
 Filter::Filter()
 {
-    m_uuid = QUuid::createUuid();
+    m_uuid = GlobalUuids.back();
+    GlobalUuids.pop_back();
 }
 
 Filter::Filter(const std::string &name) :
     m_name(name)
 {
-    m_uuid = QUuid::createUuid();
+    m_uuid = GlobalUuids.back();
+    GlobalUuids.pop_back();
 }
 
 Filter::Filter(const std::string &name, const StringList &sources, const StringList &headers) :
@@ -16,7 +19,8 @@ Filter::Filter(const std::string &name, const StringList &sources, const StringL
   , m_sources(sources)
   , m_headers(headers)
 {
-    m_uuid = QUuid::createUuid();
+    m_uuid = GlobalUuids.back();
+    GlobalUuids.pop_back();
 }
 
 void Filter::setFilterName(const std::string &name)

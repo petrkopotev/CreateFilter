@@ -1,8 +1,6 @@
 #ifndef VCFILTERWRITER_H
 #define VCFILTERWRITER_H
 
-#include <QString>
-#include <QMap>
 #include "Filter.h"
 
 class QXmlStreamWriter;

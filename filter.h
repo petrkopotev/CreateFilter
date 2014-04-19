@@ -1,7 +1,7 @@
 #ifndef FILTER_H
 #define FILTER_H
 
-#include <QUuid>
+#include <string>
 #include <list>
 
 class Filter
@@ -13,10 +13,10 @@ public:
     explicit Filter(const std::string &name);
     explicit Filter(const std::string &name, const StringList &sources, const StringList &headers);
 
-    std::string getFilterName() const { return m_name; }
+    const std::string &getFilterName() const { return m_name; }
     void setFilterName(const std::string &name);
 
-    std::string getUuid() const { return m_uuid.toString().toStdString(); }
+    const std::string &getUuid() const { return m_uuid; }
 
     const StringList &getSources() const { return m_sources; }
     void appendSourceFile(const std::string &fileName);
@@ -28,10 +28,10 @@ public:
 
 private:
 
-    std::string     m_name;
-    StringList m_sources;
-    StringList m_headers;
-    QUuid       m_uuid;
+    std::string m_name;
+    StringList  m_sources;
+    StringList  m_headers;
+    std::string m_uuid;
 };
 
 #endif // FILTER_H
