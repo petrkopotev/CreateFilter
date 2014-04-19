@@ -1,0 +1,338 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00F65FDC2447056A6D4958D9 /* tinyxml2.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E9EE3F865039C2803D98A5E5 /* tinyxml2.cpp */; settings = {ATTRIBUTES = (); }; };
+		2D367B399AA57F7319FEA1FA /* main.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 682A50D19E416195436708E4 /* main.cpp */; settings = {ATTRIBUTES = (); }; };
+		3787B5C0BACB736D71312D41 /* vcfilterwriter.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F7C524AC622FE4DD64B0E627 /* vcfilterwriter.cpp */; settings = {ATTRIBUTES = (); }; };
+		58C636D85261A9C4DF6A16E6 /* vcprojectreader.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = BA40BBB3FC301301FBCDB818 /* vcprojectreader.cpp */; settings = {ATTRIBUTES = (); }; };
+		979B85BF64028984724DF87C /* filter.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = BDBB5F49C790078A1AD2CE51 /* filter.cpp */; settings = {ATTRIBUTES = (); }; };
+		ADD1FB208CB3A2E735502929 /* uuid.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 552A523393C6B14389E7D958 /* uuid.cpp */; settings = {ATTRIBUTES = (); }; };
+		C7FCD08187316D9A7F0D1802 /* filterwriter.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2DAEDB0921BED73DCEAEC316 /* filterwriter.cpp */; settings = {ATTRIBUTES = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		10464D9948DC4D6F12814EC2 /* filterwriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filterwriter.h; sourceTree = "<absolute>"; };
+		2DAEDB0921BED73DCEAEC316 /* filterwriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = filterwriter.cpp; sourceTree = "<absolute>"; };
+		30AD3BDA8F0983F60FF4C197 /* uuid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uuid.h; sourceTree = "<absolute>"; };
+		3C19E8916148FBC7B4DA58A7 /* vcfilterwriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vcfilterwriter.h; sourceTree = "<absolute>"; };
+		552A523393C6B14389E7D958 /* uuid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uuid.cpp; sourceTree = "<absolute>"; };
+		682A50D19E416195436708E4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<absolute>"; };
+		821C61F2B79F29A8078D8E36 /* CreateFilter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CreateFilter; sourceTree = BUILT_PRODUCTS_DIR; };
+		84E6C9C4402C828FB5656EF0 /* filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<absolute>"; };
+		B758BEB59021776FEB5C6586 /* vcprojectreader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vcprojectreader.h; sourceTree = "<absolute>"; };
+		BA40BBB3FC301301FBCDB818 /* vcprojectreader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vcprojectreader.cpp; sourceTree = "<absolute>"; };
+		BDBB5F49C790078A1AD2CE51 /* filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cpp; sourceTree = "<absolute>"; };
+		C7ED51AF04AD13E742E36971 /* StringUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<absolute>"; };
+		E9EE3F865039C2803D98A5E5 /* tinyxml2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml2.cpp; path = tinyxml/tinyxml2.cpp; sourceTree = "<absolute>"; };
+		F7C524AC622FE4DD64B0E627 /* vcfilterwriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vcfilterwriter.cpp; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D1C883685E82D5676953459A /* Link Binary With Libraries */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "Link Binary With Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2EB56BE3C2D93CDAB0C52E67 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				682A50D19E416195436708E4 /* main.cpp */,
+				BDBB5F49C790078A1AD2CE51 /* filter.cpp */,
+				BA40BBB3FC301301FBCDB818 /* vcprojectreader.cpp */,
+				2DAEDB0921BED73DCEAEC316 /* filterwriter.cpp */,
+				F7C524AC622FE4DD64B0E627 /* vcfilterwriter.cpp */,
+				BC144567166567A70D400766 /* tinyxml */,
+				552A523393C6B14389E7D958 /* uuid.cpp */,
+				84E6C9C4402C828FB5656EF0 /* filter.h */,
+				B758BEB59021776FEB5C6586 /* vcprojectreader.h */,
+				10464D9948DC4D6F12814EC2 /* filterwriter.h */,
+				3C19E8916148FBC7B4DA58A7 /* vcfilterwriter.h */,
+				C7ED51AF04AD13E742E36971 /* StringUtil.h */,
+				30AD3BDA8F0983F60FF4C197 /* uuid.h */,
+			);
+			name = Sources;
+			sourceTree = "<Group>";
+		};
+		BC144567166567A70D400766 /* tinyxml */ = {
+			isa = PBXGroup;
+			children = (
+				E9EE3F865039C2803D98A5E5 /* tinyxml2.cpp */,
+			);
+			name = tinyxml;
+			sourceTree = "<Group>";
+		};
+		E8C543AB96796ECAA2E65C57 /* CreateFilter */ = {
+			isa = PBXGroup;
+			children = (
+				2EB56BE3C2D93CDAB0C52E67 /* Sources */,
+				FE0A091FDBFB3E9C31B7A1BD /* Products */,
+			);
+			name = CreateFilter;
+			sourceTree = "<Group>";
+		};
+		FE0A091FDBFB3E9C31B7A1BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				821C61F2B79F29A8078D8E36 /* CreateFilter */,
+			);
+			name = Products;
+			sourceTree = "<Group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1122F4D56D643C078A73FE6D /* CreateFilter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "CreateFilter" */;
+			buildPhases = (
+				F7E50F631C51CD5B5DC0BC43 /* Compile Sources */,
+				D1C883685E82D5676953459A /* Link Binary With Libraries */,
+				9C316F444A62BF296E3E1F25 /* Project Copy */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CreateFilter;
+			productInstallPath = bin/;
+			productName = CreateFilter;
+			productReference = 821C61F2B79F29A8078D8E36 /* CreateFilter */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6DB9C3763D02B1415CD9D565 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
+			buildConfigurationList = DAC4C1AA5EDEA1C85E9CA5E6 /* Build configuration list for PBXProject "CreateFilter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E8C543AB96796ECAA2E65C57 /* CreateFilter */;
+			productRefGroup = FE0A091FDBFB3E9C31B7A1BD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1122F4D56D643C078A73FE6D /* CreateFilter */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9C316F444A62BF296E3E1F25 /* Project Copy */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Project Copy";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp -r $BUILT_PRODUCTS_DIR/$FULL_PRODUCT_NAME /Users/petrkopotev/Projects/GitHub/CreateFilter/bin";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F7E50F631C51CD5B5DC0BC43 /* Compile Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D367B399AA57F7319FEA1FA /* main.cpp in Compile Sources */,
+				979B85BF64028984724DF87C /* filter.cpp in Compile Sources */,
+				58C636D85261A9C4DF6A16E6 /* vcprojectreader.cpp in Compile Sources */,
+				C7FCD08187316D9A7F0D1802 /* filterwriter.cpp in Compile Sources */,
+				3787B5C0BACB736D71312D41 /* vcfilterwriter.cpp in Compile Sources */,
+				00F65FDC2447056A6D4958D9 /* tinyxml2.cpp in Compile Sources */,
+				ADD1FB208CB3A2E735502929 /* uuid.cpp in Compile Sources */,
+			);
+			name = "Compile Sources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		339EE1B2CC4FC24589A0EA95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1.0;
+				DYLIB_CURRENT_VERSION = 1.0.0;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../../../Qt/5.2.1/clang_64/mkspecs/macx-clang";
+				INSTALL_DIR = /Users/petrkopotev/Projects/GitHub/CreateFilter/bin/;
+				LDPLUSPLUS = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OBJROOT = obj/;
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-O2",
+					"-Wall",
+					"-W",
+					"-fPIE",
+					"-DQT_NO_DEBUG",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-O2",
+					"-std=c++11",
+					"-stdlib=libc++",
+					"-Wall",
+					"-W",
+					"-fPIE",
+					"-DQT_NO_DEBUG",
+				);
+				OTHER_LDFLAGS = (
+					"-headerpad_max_install_names",
+					"-stdlib=libc++",
+				);
+				PRODUCT_NAME = CreateFilter;
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = macosx;
+				SYMROOT = /Users/petrkopotev/Projects/GitHub/CreateFilter;
+			};
+			name = Release;
+		};
+		3AA6C32AC930069E80220CF1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1.0;
+				DYLIB_CURRENT_VERSION = 1.0.0;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../../../Qt/5.2.1/clang_64/mkspecs/macx-clang";
+				INSTALL_DIR = /Users/petrkopotev/Projects/GitHub/CreateFilter/bin/;
+				LDPLUSPLUS = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OBJROOT = obj/;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-O2",
+					"-Wall",
+					"-W",
+					"-fPIE",
+					"-DQT_NO_DEBUG",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-O2",
+					"-std=c++11",
+					"-stdlib=libc++",
+					"-Wall",
+					"-W",
+					"-fPIE",
+					"-DQT_NO_DEBUG",
+				);
+				OTHER_LDFLAGS = (
+					"-headerpad_max_install_names",
+					"-stdlib=libc++",
+				);
+				PRODUCT_NAME = CreateFilter;
+				QT_LIBRARY_SUFFIX = _debug;
+				SDKROOT = macosx;
+				SYMROOT = /Users/petrkopotev/Projects/GitHub/CreateFilter;
+			};
+			name = Debug;
+		};
+		6666AA5E688052234F6758D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = CreateFilter;
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		77418F46922677BB04ED38DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = CreateFilter;
+				QT_LIBRARY_SUFFIX = _debug;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "CreateFilter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77418F46922677BB04ED38DD /* Debug */,
+				6666AA5E688052234F6758D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAC4C1AA5EDEA1C85E9CA5E6 /* Build configuration list for PBXProject "CreateFilter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AA6C32AC930069E80220CF1 /* Debug */,
+				339EE1B2CC4FC24589A0EA95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6DB9C3763D02B1415CD9D565 /* Project object */;
+}
