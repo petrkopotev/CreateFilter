@@ -7,20 +7,21 @@ class QXmlStreamWriter;
 class QFile;
 class FilterWriter;
 
+typedef std::list<Filter> FilterList;
+
 class VcFilterWriter
 {
 public:
-    VcFilterWriter(const std::string& fileName, const std::list<Filter> &filterList);
+    VcFilterWriter(const std::string& fileName, const FilterList &filterList);
     ~VcFilterWriter();
 
     bool open();
-    void close();
     void write();
 
 private:
     std::string        m_fileName;
     FilterWriter      *m_filterWriter;
-    std::list<Filter>  m_filterList;
+    FilterList         m_filterList;
 };
 
 #endif // VCFILTERWRITER_H

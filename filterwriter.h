@@ -4,6 +4,8 @@
 #include "Filter.h"
 #include "tinyxml/tinyxml2.h"
 
+typedef std::list<Filter> FilterList;
+
 class FilterWriter
 {
 public:
@@ -12,14 +14,14 @@ public:
 
     void StartWrite();
     void WriteHeaders();
-    void WriteBody(const std::list<Filter> &filterList);
+    void WriteBody(const FilterList &filterList);
     void WriteFilter(tinyxml2::XMLNode *parentNode, const Filter &filter);
     void EndWrite();
 
 private:
-    void WriteFilterNames(tinyxml2::XMLNode *parentNode, const std::list<Filter> &filterList);
-    void ParseFilterSourceFiles(tinyxml2::XMLNode* parentNode, const std::list<Filter> &filterList);
-    void ParseFilterHeadersFiles(tinyxml2::XMLNode* parentNode, const std::list<Filter> &filterList);
+    void WriteFilterNames(tinyxml2::XMLNode *parentNode, const FilterList &filterList);
+    void ParseFilterSourceFiles(tinyxml2::XMLNode* parentNode, const FilterList &filterList);
+    void ParseFilterHeadersFiles(tinyxml2::XMLNode* parentNode, const FilterList &filterList);
     void WriteFilterSourceFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName);
     void WriteFilterHeaderFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName);
     void WriteFilterFile(const char* tag, tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName);

@@ -1,5 +1,6 @@
 #include "vcprojectreader.h"
 #include "vcfilterwriter.h"
+
 #include <string>
 
 int main(int argc, char *argv[])
@@ -12,7 +13,7 @@ int main(int argc, char *argv[])
 
     std::string projectFile = argv[1];
     std::string filterFile = projectFile + ".filters";
-    VcProjectReader reader(projectFile.data());
+    VcProjectReader reader(projectFile);
 
     if(!reader.open())
     {
@@ -20,9 +21,9 @@ int main(int argc, char *argv[])
         exit(-1);
     }
 
-    std::map<std::string, Filter> result = reader.read();
-    std::list<Filter> filterList;
-    for(std::map<std::string, Filter>::const_iterator it = result.cbegin();
+    VcProjectReader::FilterMap result = reader.read();
+    FilterList filterList;
+    for(VcProjectReader::FilterMap::const_iterator it = result.cbegin();
         it != result.cend(); ++it)
     {
         filterList.push_back(it->second);
@@ -31,8 +32,6 @@ int main(int argc, char *argv[])
     VcFilterWriter writer(filterFile, filterList);
     writer.open();
     writer.write();
-    writer.close();
-    reader.close();
 
     return 0;
 }

@@ -25,7 +25,7 @@ void FilterWriter::WriteHeaders()
     m_document->InsertEndChild(startElement);
 }
 
-void FilterWriter::WriteBody(const std::list<Filter> &filterList)
+void FilterWriter::WriteBody(const FilterList &filterList)
 {
     tinyxml2::XMLElement* element = m_document->NewElement("ItemGroup");
     m_document->LastChild()->InsertEndChild(element);
@@ -86,16 +86,16 @@ void FilterWriter::WriteFilterFile(const char* tag, tinyxml2::XMLNode* parentNod
     parentNode->InsertEndChild(includeElement);
 }
 
-void FilterWriter::WriteFilterNames(tinyxml2::XMLNode* node, const std::list<Filter> &filterList)
+void FilterWriter::WriteFilterNames(tinyxml2::XMLNode* node, const FilterList &filterList)
 {
     for (Filter filter : filterList) {
         WriteFilter(node, filter);
     }
 }
 
-void FilterWriter::ParseFilterSourceFiles(tinyxml2::XMLNode *parentNode, const std::list<Filter> &filterList)
+void FilterWriter::ParseFilterSourceFiles(tinyxml2::XMLNode *parentNode, const FilterList &filterList)
 {
-    for(std::list<Filter>::const_iterator filterIterator = filterList.cbegin();
+    for(FilterList::const_iterator filterIterator = filterList.cbegin();
         filterIterator != filterList.cend();
         ++filterIterator)
     {
@@ -108,9 +108,9 @@ void FilterWriter::ParseFilterSourceFiles(tinyxml2::XMLNode *parentNode, const s
     }
 }
 
-void FilterWriter::ParseFilterHeadersFiles(tinyxml2::XMLNode* parentNode, const std::list<Filter> &filterList)
+void FilterWriter::ParseFilterHeadersFiles(tinyxml2::XMLNode* parentNode, const FilterList &filterList)
 {
-    for(std::list<Filter>::const_iterator filterIterator = filterList.cbegin();
+    for(FilterList::const_iterator filterIterator = filterList.cbegin();
         filterIterator != filterList.cend();
         ++filterIterator)
     {

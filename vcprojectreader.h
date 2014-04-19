@@ -9,12 +9,13 @@
 class VcProjectReader
 {
 public:
+    typedef std::map<std::string, Filter> FilterMap;
+
     VcProjectReader(const std::string& fileName);
     ~VcProjectReader();
 
     bool open();
-    void close();
-    const std::map<std::string, Filter>& read();
+    const FilterMap& read();
 
 protected:
     void readSources(const char* str);
@@ -27,7 +28,7 @@ protected:
 private:
     std::string            m_fileName;
     tinyxml2::XMLDocument *m_document;
-    std::map<std::string, Filter>  m_filterMap;
+    FilterMap              m_filterMap;
 };
 
 #endif // VCPROJECTREADER_H

@@ -27,13 +27,6 @@ bool VcProjectReader::open()
     return true;
 }
 
-void VcProjectReader::close()
-{
-    // DO we need to reinitialize it?
-    delete m_document;
-    m_document = new tinyxml2::XMLDocument;
-}
-
 
 ///TODO extract this to something more neat
 void VcProjectReader::lookupForSources(tinyxml2::XMLNode* node)
@@ -71,7 +64,7 @@ void VcProjectReader::readChildren(tinyxml2::XMLNode* node)
     }
 }
 
-const std::map<std::string, Filter> &VcProjectReader::read()
+const VcProjectReader::FilterMap &VcProjectReader::read()
 {
     readChildren(m_document);
     
