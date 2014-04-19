@@ -1,6 +1,6 @@
 CreateFilter
 CreateFilter.pro.user
-.qmake.stash
 Makefile
 *.o
 bin
+obj
