@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core
-
-
+QT       -= core
 QT       -= gui
 
 TARGET = CreateFilter

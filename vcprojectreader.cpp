@@ -1,6 +1,5 @@
 #include "vcprojectreader.h"
 #include "StringUtil.h"
-#include <QDir>
 #include <regex>
 
 
@@ -98,7 +97,7 @@ std::list<std::string> split(std::string &toSplit, const std::string &separator)
 void VcProjectReader::readSources(const char *str)
 {
     std::string row = str;
-    char separator = QDir::separator().toLatin1();
+    char separator = StringUtil::separator()[0];
     std::list<std::string> list = split(row, std::string(1, separator));
 
     //QString row = QString::fromLocal8Bit(str);

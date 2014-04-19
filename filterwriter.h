@@ -1,7 +1,6 @@
 #ifndef FILTERWRITER_H
 #define FILTERWRITER_H
 
-#include <QList>
 #include "Filter.h"
 #include "tinyxml/tinyxml2.h"
 

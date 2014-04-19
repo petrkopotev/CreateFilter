@@ -15,6 +15,15 @@ public:
         }
     }
 
+    static std::string separator()
+    {
+#ifdef __APPLE__
+        return std::string("/");
+#elif _WIN32
+        return std::string("\\");
+#endif
+    }
+
 private:
     StringUtil();
     StringUtil(StringUtil&);

@@ -88,7 +88,7 @@ void FilterWriter::WriteFilterFile(const char* tag, tinyxml2::XMLNode* parentNod
 
 void FilterWriter::WriteFilterNames(tinyxml2::XMLNode* node, const std::list<Filter> &filterList)
 {
-    foreach (Filter filter, filterList) {
+    for (Filter filter : filterList) {
         WriteFilter(node, filter);
     }
 }

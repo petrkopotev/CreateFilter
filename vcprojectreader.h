@@ -1,7 +1,7 @@
 #ifndef VCPROJECTREADER_H
 #define VCPROJECTREADER_H
 
-#include <QMap>
+#include <map>
 #include "Filter.h"
 #include "tinyxml/tinyxml2.h"
 

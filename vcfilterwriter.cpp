@@ -1,6 +1,4 @@
 #include "vcfilterwriter.h"
-#include <QFile>
-#include <QXmlStreamWriter>
 #include "filterwriter.h"
 
 VcFilterWriter::VcFilterWriter(const std::string &fileName, const std::list<Filter> &filterList) :
