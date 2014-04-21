@@ -1,5 +1,6 @@
 #include "vcprojectreader.h"
 #include "vcfilterwriter.h"
+#include "uuid.h"
 
 #include <string>
 
@@ -10,6 +11,8 @@ int main(int argc, char *argv[])
         printf("%s", "Usage: CreateFilter YourFile.vcxproj\n");
         return 1;
     }
+
+	InitializeGlobalUUIDs();
 
     std::string projectFile = argv[1];
     std::string filterFile = projectFile + ".filters";

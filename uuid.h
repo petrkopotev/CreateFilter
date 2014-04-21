@@ -5,5 +5,7 @@
 #include <string>
 
 extern std::list<std::string> GlobalUuids;
+void InitializeGlobalUUIDs();
+
 
 #endif // UUID_H

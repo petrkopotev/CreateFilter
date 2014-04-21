@@ -92,6 +92,17 @@ void VcProjectReader::readSources(const char *str)
     std::string row = str;
     char separator = StringUtil::separator()[0];
     std::list<std::string> list = split(row, std::string(1, separator));
+	std::list<std::string>::const_iterator it = list.begin();
+	while(it != list.end())
+	{
+		if(*it == "..")
+		{
+			list.erase(it++);
+		} else {
+			++it;
+		}
+	}
+
 
     //QString row = QString::fromLocal8Bit(str);
     //QStringList list = row.split(QDir::separator());
@@ -115,7 +126,11 @@ void VcProjectReader::createFilters(const std::list<std::string> &rawStrings)
             fileName.append(filterName).append(*it);
             //filterName.erase(filterName.find("..\\"));
             //filterName.erase(filterName.find_last_of("\\"));
-            insertFilter(filterName.erase(filterName.find_last_of("\\")), fileName);
+			size_t pos = std::string::npos;
+			if((pos = filterName.find_last_of("\\")) != std::string::npos)
+				filterName.erase(pos);
+
+            insertFilter(filterName, fileName);
         }
     }
 }
