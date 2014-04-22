@@ -41,7 +41,9 @@ void VcProjectReader::lookupForSources(tinyxml2::XMLNode* node)
                 if(tinyxml2::XMLElement* el = node->ToElement())
                 {
                     //Lookup for ClInclude, ClSource and extract
-                    if(strcmp(el->Name(), "ClInclude") == 0 || strcmp(el->Name(), "ClCompile") == 0)
+                    if(strcmp(el->Name(), "ClInclude") == 0 ||
+						strcmp(el->Name(), "ClCompile") == 0 ||
+						strcmp(el->Name(), "CustomBuild") == 0)
                     {
                         readSources(el->FirstAttribute()->Value());
                     }
@@ -60,7 +62,10 @@ void VcProjectReader::readChildren(tinyxml2::XMLNode* node)
     
     for(tinyxml2::XMLNode* child = node->FirstChild(); child; child = child->NextSibling())
     {
-        readChildren(child);
+		if(child->ToElement())
+		{
+			readChildren(child);
+		}
     }
 }
 
@@ -116,7 +121,7 @@ void VcProjectReader::createFilters(const std::list<std::string> &rawStrings)
     for(std::list<std::string>::const_iterator it = rawStrings.cbegin();
         it != rawStrings.cend(); it++)
     {
-        if(!std::regex_search(*it, std::regex("\\.(h|c(c)|c(pp)?)$")))
+        if(!std::regex_search(*it, std::regex("\\.(h|c(c)|c(pp)|moc?)$")))
         {
             filterName.append(*it);
             //filterName.erase(filterName.find("..\\") - 1);
@@ -149,7 +154,8 @@ void VcProjectReader::insertFilter(const std::string &filterName, const std::str
             Filter filter = m_filterMap[filterName];
             if(StringUtil::endsWith(fileName, ".cpp") ||
                     StringUtil::endsWith(fileName, ".cc") ||
-                    StringUtil::endsWith(fileName, ".c"))
+                    StringUtil::endsWith(fileName, ".c") ||
+					StringUtil::endsWith(fileName, ".moc"))
             {
                 filter.appendSourceFile(fileName);
             } else
@@ -162,7 +168,8 @@ void VcProjectReader::insertFilter(const std::string &filterName, const std::str
         std::list<std::string> sources, headers;
         if(StringUtil::endsWith(fileName, ".cpp") ||
                 StringUtil::endsWith(fileName, ".cc") ||
-                StringUtil::endsWith(fileName, ".c"))
+                StringUtil::endsWith(fileName, ".c") ||
+			    StringUtil::endsWith(fileName, ".moc"))
         {
             sources.push_back(fileName);
 
