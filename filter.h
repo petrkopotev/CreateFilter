@@ -24,7 +24,7 @@ public:
     const StringList &getHeaders() const { return m_headers; }
     void appendHeaderFile(const std::string &fileName);
 
-	const StringList &getGenerated() const { return m_generated; }
+    const StringList &getGenerated() const { return m_generated; }
     void appendGeneratedFile(const std::string &fileName);
 
     void show() const;

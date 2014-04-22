@@ -1,6 +1,10 @@
 CreateFilter
 CreateFilter.pro.user
+CreateFilter.v11.suo
+CreateFilter.vcxproject.user
+CreateFilter.sdf
 Makefile
+Makefile.*
 *.o
 bin
 obj
