@@ -15,6 +15,22 @@ public:
         }
     }
 
+	static std::list<std::string> split(std::string &toSplit, const std::string &separator)
+	{
+		size_t pos = 0;
+		std::string token;
+		std::list<std::string> result;
+		while((pos = toSplit.find(separator)) != std::string::npos)
+		{
+			token = toSplit.substr(0, pos);
+			result.push_back(token);
+			toSplit.erase(0, pos + separator.length());
+		}
+
+		result.push_back(toSplit);
+		return result;
+	}
+
     static std::string separator()
     {
 #ifdef __APPLE__
@@ -23,6 +39,7 @@ public:
         return std::string("\\");
 #endif
     }
+
 
 private:
     StringUtil();

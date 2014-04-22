@@ -76,27 +76,11 @@ const VcProjectReader::FilterMap &VcProjectReader::read()
     return m_filterMap;
 }
 
-std::list<std::string> split(std::string &toSplit, const std::string &separator)
-{
-    size_t pos = 0;
-    std::string token;
-    std::list<std::string> result;
-    while((pos = toSplit.find(separator)) != std::string::npos)
-    {
-        token = toSplit.substr(0, pos);
-        result.push_back(token);
-        toSplit.erase(0, pos + separator.length());
-    }
-
-    result.push_back(toSplit);
-    return result;
-}
-
 void VcProjectReader::readSources(const char *str)
 {
     std::string row = str;
     char separator = StringUtil::separator()[0];
-    std::list<std::string> list = split(row, std::string(1, separator));
+    std::list<std::string> list = StringUtil::split(row, std::string(1, separator));
 	std::list<std::string>::const_iterator it = list.begin();
 	while(it != list.end())
 	{
