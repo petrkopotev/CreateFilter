@@ -18,7 +18,7 @@ public:
     const FilterMap& read();
 
 protected:
-    void readSources(const char* str);
+    void readSources(const std::string& str);
     void readChildren(tinyxml2::XMLNode* node);
     void lookupForSources(tinyxml2::XMLNode* node);
 

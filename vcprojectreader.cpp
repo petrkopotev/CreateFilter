@@ -76,7 +76,7 @@ const VcProjectReader::FilterMap &VcProjectReader::read()
     return m_filterMap;
 }
 
-void VcProjectReader::readSources(const char *str)
+void VcProjectReader::readSources(const std::string &str)
 {
     std::string row = str;
     char separator = StringUtil::separator()[0];
