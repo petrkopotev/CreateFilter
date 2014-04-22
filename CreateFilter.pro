@@ -31,6 +31,6 @@ HEADERS += \
     vcprojectreader.h \
     filterwriter.h \
     vcfilterwriter.h \
-    tinyxml/tinyxml2.cpp \
+    tinyxml/tinyxml2.h \
     StringUtil.h \
     uuid.h
