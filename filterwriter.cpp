@@ -38,6 +38,10 @@ void FilterWriter::WriteBody(const FilterList &filterList)
     element = m_document->NewElement("ItemGroup");
     m_document->LastChild()->InsertEndChild(element);
     ParseFilterSourceFiles(element, filterList);
+
+	element = m_document->NewElement("ItemGroup");
+    m_document->LastChild()->InsertEndChild(element);
+    ParseFilterGeneratedFiles(element, filterList);
 }
 
 void FilterWriter::EndWrite()
@@ -72,6 +76,14 @@ void FilterWriter::WriteFilterHeaderFile(tinyxml2::XMLNode* parentNode, const Fi
     //      <Filter>wtf</Filter>
     //</ClInclude>
     WriteFilterFile("CLInclude", parentNode, filter, fileName);
+}
+
+void FilterWriter::WriteFilterGeneratedFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName)
+{
+    //<CustomBuild Include="..\wtf\OwnPtr.h">
+    //      <Filter>wtf</Filter>
+    //</CustomBuild>
+    WriteFilterFile("CustomBuild", parentNode, filter, fileName);
 }
 
 void FilterWriter::WriteFilterFile(const char* tag, tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName)
@@ -119,6 +131,21 @@ void FilterWriter::ParseFilterHeadersFiles(tinyxml2::XMLNode* parentNode, const 
             ++it)
         {
             WriteFilterHeaderFile(parentNode, *filterIterator, *it);
+        }
+    }
+}
+
+void FilterWriter::ParseFilterGeneratedFiles(tinyxml2::XMLNode* parentNode, const FilterList &filterList)
+{
+	for(FilterList::const_iterator filterIterator = filterList.cbegin();
+        filterIterator != filterList.cend();
+        ++filterIterator)
+    {
+        for(std::list<std::string>::const_iterator it = filterIterator->getGenerated().cbegin();
+			it != filterIterator->getGenerated().cend();
+            ++it)
+        {
+            WriteFilterGeneratedFile(parentNode, *filterIterator, *it);
         }
     }
 }

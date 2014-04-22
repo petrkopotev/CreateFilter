@@ -11,7 +11,7 @@ public:
 
     Filter();
     explicit Filter(const std::string &name);
-    explicit Filter(const std::string &name, const StringList &sources, const StringList &headers);
+    explicit Filter(const std::string &name, const StringList &sources, const StringList &headers, const StringList &generated);
 
     const std::string &getFilterName() const { return m_name; }
     void setFilterName(const std::string &name);
@@ -24,6 +24,9 @@ public:
     const StringList &getHeaders() const { return m_headers; }
     void appendHeaderFile(const std::string &fileName);
 
+	const StringList &getGenerated() const { return m_generated; }
+    void appendGeneratedFile(const std::string &fileName);
+
     void show() const;
 
 private:
@@ -31,6 +34,7 @@ private:
     std::string m_name;
     StringList  m_sources;
     StringList  m_headers;
+	StringList  m_generated;
     std::string m_uuid;
 };
 

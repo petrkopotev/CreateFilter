@@ -145,8 +145,6 @@ void VcProjectReader::insertFilter(const std::string &filterName, const std::str
     if(filterName.empty())
         return;
 
-
-
     if(m_filterMap.find(filterName) != m_filterMap.cend())
     {
         if(!fileName.empty())
@@ -154,28 +152,26 @@ void VcProjectReader::insertFilter(const std::string &filterName, const std::str
             Filter filter = m_filterMap[filterName];
             if(StringUtil::endsWith(fileName, ".cpp") ||
                     StringUtil::endsWith(fileName, ".cc") ||
-                    StringUtil::endsWith(fileName, ".c") ||
-					StringUtil::endsWith(fileName, ".moc"))
-            {
+                    StringUtil::endsWith(fileName, ".c")) {
                 filter.appendSourceFile(fileName);
-            } else
-            {
+            } else if(StringUtil::endsWith(fileName, ".moc")) {
+				filter.appendGeneratedFile(fileName);
+			} else {
                 filter.appendHeaderFile(fileName);
             }
             m_filterMap[filterName] = filter;
         }
     } else {
-        std::list<std::string> sources, headers;
+        std::list<std::string> sources, headers, generated;
         if(StringUtil::endsWith(fileName, ".cpp") ||
                 StringUtil::endsWith(fileName, ".cc") ||
-                StringUtil::endsWith(fileName, ".c") ||
-			    StringUtil::endsWith(fileName, ".moc"))
-        {
+                StringUtil::endsWith(fileName, ".c")) {
             sources.push_back(fileName);
-
-        } else if(!fileName.empty()){
+        } else if(StringUtil::endsWith(fileName, ".moc")) {
+			generated.push_back(fileName);
+		} else if(!fileName.empty()){
             headers.push_back(fileName);
         }
-        m_filterMap.insert(std::pair<std::string, Filter>(filterName, Filter(filterName, sources, headers)));
+        m_filterMap.insert(std::pair<std::string, Filter>(filterName, Filter(filterName, sources, headers, generated)));
     }
 }

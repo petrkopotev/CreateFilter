@@ -22,8 +22,10 @@ private:
     void WriteFilterNames(tinyxml2::XMLNode *parentNode, const FilterList &filterList);
     void ParseFilterSourceFiles(tinyxml2::XMLNode* parentNode, const FilterList &filterList);
     void ParseFilterHeadersFiles(tinyxml2::XMLNode* parentNode, const FilterList &filterList);
+	void ParseFilterGeneratedFiles(tinyxml2::XMLNode* parentNode, const FilterList &filterList);
     void WriteFilterSourceFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName);
     void WriteFilterHeaderFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName);
+	void WriteFilterGeneratedFile(tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName);
     void WriteFilterFile(const char* tag, tinyxml2::XMLNode* parentNode, const Filter &filter, const std::string &fileName);
 
     std::string m_fileName;
