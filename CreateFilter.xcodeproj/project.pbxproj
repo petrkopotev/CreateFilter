@@ -23,6 +23,7 @@
 		3C19E8916148FBC7B4DA58A7 /* vcfilterwriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vcfilterwriter.h; sourceTree = "<absolute>"; };
 		552A523393C6B14389E7D958 /* uuid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uuid.cpp; sourceTree = "<absolute>"; };
 		682A50D19E416195436708E4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<absolute>"; };
+		72194050F997837DB8B90FDE /* tinyxml2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = tinyxml2.h; path = tinyxml/tinyxml2.h; sourceTree = "<absolute>"; };
 		821C61F2B79F29A8078D8E36 /* CreateFilter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CreateFilter; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E6C9C4402C828FB5656EF0 /* filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<absolute>"; };
 		B758BEB59021776FEB5C6586 /* vcprojectreader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vcprojectreader.h; sourceTree = "<absolute>"; };
@@ -69,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				E9EE3F865039C2803D98A5E5 /* tinyxml2.cpp */,
+				72194050F997837DB8B90FDE /* tinyxml2.h */,
 			);
 			name = tinyxml;
 			sourceTree = "<Group>";
