@@ -6,7 +6,7 @@
 class StringUtil
 {
 public:
-    static bool endsWith(std::string const &fullString, std::string const &ending)
+    static bool endsWith(const std::string &fullString, const std::string &ending)
     {
         if (fullString.length() >= ending.length()) {
             return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
