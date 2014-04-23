@@ -25,11 +25,11 @@
 		682A50D19E416195436708E4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<absolute>"; };
 		72194050F997837DB8B90FDE /* tinyxml2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = tinyxml2.h; path = tinyxml/tinyxml2.h; sourceTree = "<absolute>"; };
 		821C61F2B79F29A8078D8E36 /* CreateFilter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CreateFilter; sourceTree = BUILT_PRODUCTS_DIR; };
+		8309F1E5190849CE00F2D58D /* stringutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringutil.h; sourceTree = SOURCE_ROOT; };
 		84E6C9C4402C828FB5656EF0 /* filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<absolute>"; };
 		B758BEB59021776FEB5C6586 /* vcprojectreader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vcprojectreader.h; sourceTree = "<absolute>"; };
 		BA40BBB3FC301301FBCDB818 /* vcprojectreader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vcprojectreader.cpp; sourceTree = "<absolute>"; };
 		BDBB5F49C790078A1AD2CE51 /* filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cpp; sourceTree = "<absolute>"; };
-		C7ED51AF04AD13E742E36971 /* StringUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<absolute>"; };
 		E9EE3F865039C2803D98A5E5 /* tinyxml2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml2.cpp; path = tinyxml/tinyxml2.cpp; sourceTree = "<absolute>"; };
 		F7C524AC622FE4DD64B0E627 /* vcfilterwriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vcfilterwriter.cpp; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -60,7 +60,6 @@
 				B758BEB59021776FEB5C6586 /* vcprojectreader.h */,
 				10464D9948DC4D6F12814EC2 /* filterwriter.h */,
 				3C19E8916148FBC7B4DA58A7 /* vcfilterwriter.h */,
-				C7ED51AF04AD13E742E36971 /* StringUtil.h */,
 				30AD3BDA8F0983F60FF4C197 /* uuid.h */,
 			);
 			name = Sources;
@@ -78,6 +77,7 @@
 		E8C543AB96796ECAA2E65C57 /* CreateFilter */ = {
 			isa = PBXGroup;
 			children = (
+				8309F1E5190849CE00F2D58D /* stringutil.h */,
 				2EB56BE3C2D93CDAB0C52E67 /* Sources */,
 				FE0A091FDBFB3E9C31B7A1BD /* Products */,
 			);

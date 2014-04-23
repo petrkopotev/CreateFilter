@@ -32,5 +32,5 @@ HEADERS += \
     filterwriter.h \
     vcfilterwriter.h \
     tinyxml/tinyxml2.h \
-    StringUtil.h \
+    stringutil.h \
     uuid.h
