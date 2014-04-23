@@ -92,11 +92,6 @@ void VcProjectReader::readSources(const std::string &str, bool isFilterCustom)
 		}
 	}
 
-	if(StringUtil::endsWith(str, "qwebframe.h"))
-	{
-		printf("qwebframe.h");
-	}
-
     createFilters(list, isFilterCustom);
 }
 
