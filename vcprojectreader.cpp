@@ -42,11 +42,11 @@ void VcProjectReader::lookupForSources(tinyxml2::XMLNode* node)
                 {
                     //Lookup for ClInclude, ClSource and extract
                     if(strcmp(el->Name(), "ClInclude") == 0 ||
-						strcmp(el->Name(), "ClCompile") == 0 ||
-						strcmp(el->Name(), "CustomBuild") == 0)
-                    {
+						strcmp(el->Name(), "ClCompile") == 0) {
                         readSources(el->FirstAttribute()->Value());
-                    }
+                    } else if(strcmp(el->Name(), "CustomBuild") == 0) {
+						readSources(el->FirstAttribute()->Value(), true);
+					}
                 }
             }
         }
@@ -76,7 +76,7 @@ const VcProjectReader::FilterMap &VcProjectReader::read()
     return m_filterMap;
 }
 
-void VcProjectReader::readSources(const std::string &str)
+void VcProjectReader::readSources(const std::string &str, bool isFilterCustom)
 {
     std::string row = str;
     char separator = StringUtil::separator()[0];
@@ -92,24 +92,26 @@ void VcProjectReader::readSources(const std::string &str)
 		}
 	}
 
+	if(StringUtil::endsWith(str, "qwebframe.h"))
+	{
+		printf("qwebframe.h");
+	}
 
-    //QString row = QString::fromLocal8Bit(str);
-    //QStringList list = row.split(QDir::separator());
-    createFilters(list);
+    createFilters(list, isFilterCustom);
 }
 
-void VcProjectReader::createFilters(const std::list<std::string> &rawStrings)
+void VcProjectReader::createFilters(const std::list<std::string> &rawStrings, bool isFilterCustom)
 {
     std::string filterName, fileName;
 
     for(std::list<std::string>::const_iterator it = rawStrings.cbegin();
         it != rawStrings.cend(); it++)
     {
-        if(!std::regex_search(*it, std::regex("\\.(h|c(c)|c(pp)|moc?)$")))
+        if(!std::regex_search(*it, std::regex("\\.(h|c|cc|cpp|moc?)$")))
         {
             filterName.append(*it);
             //filterName.erase(filterName.find("..\\") - 1);
-            insertFilter(filterName);
+            insertFilter(filterName, isFilterCustom);
             filterName.append("\\");
         } else {
             fileName.append(filterName).append(*it);
@@ -119,12 +121,12 @@ void VcProjectReader::createFilters(const std::list<std::string> &rawStrings)
 			if((pos = filterName.find_last_of("\\")) != std::string::npos)
 				filterName.erase(pos);
 
-            insertFilter(filterName, fileName);
+			insertFilter(filterName, isFilterCustom, fileName);
         }
     }
 }
 
-void VcProjectReader::insertFilter(const std::string &filterName, const std::string &fileName)
+void VcProjectReader::insertFilter(const std::string &filterName, bool isFilterCustom, const std::string &fileName)
 {
     if(filterName.empty())
         return;
@@ -134,12 +136,12 @@ void VcProjectReader::insertFilter(const std::string &filterName, const std::str
         if(!fileName.empty())
         {
             Filter filter = m_filterMap[filterName];
-            if(StringUtil::endsWith(fileName, ".cpp") ||
-                    StringUtil::endsWith(fileName, ".cc") ||
-                    StringUtil::endsWith(fileName, ".c")) {
-                filter.appendSourceFile(fileName);
-            } else if(StringUtil::endsWith(fileName, ".moc")) {
+			if(isFilterCustom  && !fileName.empty() || StringUtil::endsWith(fileName, ".moc")) {
 				filter.appendGeneratedFile(fileName);
+			} else if(StringUtil::endsWith(fileName, ".cpp") ||
+                      StringUtil::endsWith(fileName, ".cc") ||
+                      StringUtil::endsWith(fileName, ".c")) {
+                filter.appendSourceFile(fileName);
 			} else {
                 filter.appendHeaderFile(fileName);
             }
@@ -147,15 +149,19 @@ void VcProjectReader::insertFilter(const std::string &filterName, const std::str
         }
     } else {
         std::list<std::string> sources, headers, generated;
-        if(StringUtil::endsWith(fileName, ".cpp") ||
-                StringUtil::endsWith(fileName, ".cc") ||
-                StringUtil::endsWith(fileName, ".c")) {
-            sources.push_back(fileName);
-        } else if(StringUtil::endsWith(fileName, ".moc")) {
-			generated.push_back(fileName);
-		} else if(!fileName.empty()){
-            headers.push_back(fileName);
-        }
+		if(!fileName.empty())
+        {
+			if(isFilterCustom || StringUtil::endsWith(fileName, ".moc")) {
+				generated.push_back(fileName);
+			} else if(StringUtil::endsWith(fileName, ".cpp") ||
+					  StringUtil::endsWith(fileName, ".cc") ||
+					  StringUtil::endsWith(fileName, ".c") ) {
+				sources.push_back(fileName);
+			} else {
+				headers.push_back(fileName);
+			}
+		}
+
         m_filterMap.insert(std::pair<std::string, Filter>(filterName, Filter(filterName, sources, headers, generated)));
     }
 }

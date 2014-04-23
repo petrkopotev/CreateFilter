@@ -18,12 +18,12 @@ public:
     const FilterMap& read();
 
 protected:
-    void readSources(const std::string& str);
+    void readSources(const std::string& str, bool isFilterCustom = false);
     void readChildren(tinyxml2::XMLNode* node);
     void lookupForSources(tinyxml2::XMLNode* node);
 
-    void createFilters(const std::list<std::string> &filterNames);
-    void insertFilter(const std::string &filterName, const std::string &fileName = std::string());
+    void createFilters(const std::list<std::string> &filterNames, bool isFilterCustom);
+    void insertFilter(const std::string &filterName, bool isFilterCustom, const std::string &fileName = std::string());
 
 private:
     std::string            m_fileName;
