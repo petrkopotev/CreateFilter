@@ -28,9 +28,9 @@ public:
 			splitStr.erase(0, pos + separator.length());
 		}
 
-		result.push_back(toSplit);
-		return result;
-	}
+        result.push_back(splitStr);
+        return result;
+    }
 
     static std::string separator()
     {
