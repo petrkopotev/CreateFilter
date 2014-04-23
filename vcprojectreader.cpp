@@ -78,19 +78,8 @@ const VcProjectReader::FilterMap &VcProjectReader::read()
 
 void VcProjectReader::readSources(const std::string &str, bool isFilterCustom)
 {
-    std::string row = str;
     char separator = StringUtil::separator()[0];
-    std::list<std::string> list = StringUtil::split(row, std::string(1, separator));
-	std::list<std::string>::const_iterator it = list.begin();
-	while(it != list.end())
-	{
-		if(*it == "..")
-		{
-			list.erase(it++);
-		} else {
-			++it;
-		}
-	}
+    std::list<std::string> list = StringUtil::split(str, std::string(1, separator));
 
     createFilters(list, isFilterCustom);
 }

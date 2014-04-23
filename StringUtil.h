@@ -15,16 +15,17 @@ public:
         }
     }
 
-	static std::list<std::string> split(std::string &toSplit, const std::string &separator)
+	static std::list<std::string> split(const std::string &toSplit, const std::string &separator)
 	{
 		size_t pos = 0;
 		std::string token;
+		std::string splitStr = toSplit;
 		std::list<std::string> result;
-		while((pos = toSplit.find(separator)) != std::string::npos)
+		while((pos = splitStr.find(separator)) != std::string::npos)
 		{
-			token = toSplit.substr(0, pos);
+			token = splitStr.substr(0, pos);
 			result.push_back(token);
-			toSplit.erase(0, pos + separator.length());
+			splitStr.erase(0, pos + separator.length());
 		}
 
 		result.push_back(toSplit);
