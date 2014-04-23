@@ -120,7 +120,7 @@ void VcProjectReader::insertFilter(const std::string &filterName, bool isFilterC
         if(!fileName.empty())
         {
             Filter filter = m_filterMap[filterName];
-			if(isFilterCustom  && !fileName.empty() || StringUtil::endsWith(fileName, ".moc")) {
+            if(isFilterCustom || StringUtil::endsWith(fileName, ".moc")) {
 				filter.appendGeneratedFile(fileName);
 			} else if(StringUtil::endsWith(fileName, ".cpp") ||
                       StringUtil::endsWith(fileName, ".cc") ||
